@@ -47,6 +47,13 @@ function application.mousePressed(self, x, y, button, isTouch)
   end
 end
 
+function application.wheelMoved(self, x, y)
+  local handled = false
+  for k,v in pairs(self.widgets) do
+    handled = v:wheelMoved(handled, x, y) or handled
+  end
+end
+
 function application.keyPressed(self, key, code, isRepeat)
   local handled = false
   for k,v in pairs(self.widgets) do

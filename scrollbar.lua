@@ -102,4 +102,9 @@ function scrollBar.update(self, dt)
   end
 end
 
+function scrollBar.wheelMoved(self, x, y)
+
+
+end
+
 return scrollBar

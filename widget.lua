@@ -71,6 +71,10 @@ function widget.mouseReleased(self, handled, x, y, button, isTouch)
   return handled
 end
 
+function widget.wheelMoved(self, x, y)
+  -- empty function for widgets that do not respond to wheel movement. 
+end
+
 function widget.textInput(self, handled, text)
   -- empty function for widgets that do not receive text.
 end

@@ -35,6 +35,10 @@ function love.mousepressed(x, y, button, istouch)
    app:mousePressed(x, y, button, istouch)
 end
 
+function love.wheelmoved(x, y)
+    app:wheelMoved(x, y)
+end
+
 function love.keypressed(key, keycode, isRepeat)
   app:keyPressed(key, keycode, isRepeat)
 end
