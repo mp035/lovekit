@@ -1,3 +1,4 @@
+
 local application = require("application")
 local button = require("button")
 local textBox = require("textbox")
@@ -39,6 +40,6 @@ function love.keypressed(key, keycode, isRepeat)
 end
 
 function love.textinput(text)
-  -- for some reason this is never called!
+  -- for some reason this is never called! -- Because Love 11.1 is broken
   app:textInput(text)
 end

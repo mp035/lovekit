@@ -21,22 +21,23 @@ function button.init(self, app, x, y, label)
 end
 
 function button.draw(self)
-  
-  love.graphics.setColor(self.color.fill)
+  local color = self:getColor()
+
+  love.graphics.setColor(color.fill)
   love.graphics.rectangle("fill", self.x, self.y, self.width, self.height, self.radius.x,self.radius.y)
   
-  love.graphics.setColor(self.color.stroke)
+  love.graphics.setColor(color.stroke)
   love.graphics.rectangle("line", self.x, self.y, self.width, self.height, self.radius.x,self.radius.y)
   
-  love.graphics.setColor(self.color.text)
+  love.graphics.setColor(color.text)
   love.graphics.printf(self.text, self.x,self.y, self.width - self.padding.x * 2, self.textPos, 0, self.height / 30, self.height / 30, self.padding.x *-1, self.padding.y * -1)
 
 
 end
 
-function button.keyPressed(self, key)
+function button.keyPressed(self, handled, key)
   if self.focused then
-    self.text = self.text .. key
+    return true
   end
 end
 

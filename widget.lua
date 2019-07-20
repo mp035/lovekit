@@ -11,7 +11,6 @@ widget.colors = {
 widget.padding = {x=8, y=8}
 widget.radius = {x=5, y=5}
 widget.focused = false
-widget.color = widget.colors.released
 widget.pressed = false
 widget.clock = 0
 
@@ -34,30 +33,45 @@ function widget.getClientSize(self)
   return {x = self.width - self.padding.x * 2, y = self.height - self.padding.y * 2}
 end
 
+function widget.getColor(self)
+    
+    local currentColor = self.colors.released
+    if self.pressed then
+        currentColor = self.colors.pressed
+    elseif self.focused then
+        currentColor = self.colors.focused
+    end
+    
+    return currentColor
+
+end
+
 function widget.onClick(self)
   -- empty click handler
 end
 
-function widget.mousePressed(self, x, y, button, isTouch)
-  if self:hit(x,y) then 
-    self.color = self.colors.pressed
+function widget.mousePressed(self, handled, x, y, button, isTouch)
+  if self:hit(x,y) and not handled then 
     self.pressed = true
+    return true
   end
 end
 
-function widget.mouseReleased(self, x, y, button, isTouch)
+function widget.mouseReleased(self, handled, x, y, button, isTouch)
   
   if self:hit(x,y) and self.pressed then
-    self.focused = true
-    self.color = self.colors.focused
+      if not handled then
+        self.focused = true
+        handled = true
+      end
   else
     self.focused = false
-    self.color = self.colors.released
   end
   self.pressed = false
+  return handled
 end
 
-function widget.textInput(self, text)
+function widget.textInput(self, handled, text)
   -- empty function for widgets that do not receive text.
 end
 

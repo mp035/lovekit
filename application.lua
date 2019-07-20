@@ -34,26 +34,30 @@ function application.update(self, dt)
 end
 
 function application.mouseReleased(self, x, y, button, isTouch)
+  local handled = false
   for k,v in pairs(self.widgets) do
-    v:mouseReleased(x, y, button, isTouch)
+    handled = v:mouseReleased(handled, x, y, button, isTouch) or handled
   end
 end
 
 function application.mousePressed(self, x, y, button, isTouch)
+  local handled = false
   for k,v in pairs(self.widgets) do
-    v:mousePressed(x, y, button, isTouch)
+    handled = v:mousePressed(handled, x, y, button, isTouch) or handled
   end
 end
 
 function application.keyPressed(self, key, code, isRepeat)
+  local handled = false
   for k,v in pairs(self.widgets) do
-    v:keyPressed(key, code, isRepeat)
+    handled = v:keyPressed(handled, key, code, isRepeat) or handled
   end
 end
 
 function application.textInput(self, key)
+  local handled = false
   for k,v in pairs(self.widgets) do
-    v:textInput(key)
+    handled = v:textInput(handled, key) or handled
   end
 end
 

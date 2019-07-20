@@ -42,15 +42,17 @@ end
 
 function selectBox.draw(self)
   
+  local currentColor = self:getColor()
+
   local bw = 30 -- the width of the button on the right of the combo.
   
-  love.graphics.setColor(self.color.fill)
+  love.graphics.setColor(currentColor.fill)
   love.graphics.rectangle("fill", self.x, self.y, self.width, self.height, self.radius.x, self.radius.y)
   
-  love.graphics.setColor(self.color.stroke)
+  love.graphics.setColor(currentColor.stroke)
   love.graphics.rectangle("line", self.x, self.y, self.width, self.height, self.radius.x, self.radius.y)
   
-  love.graphics.setColor(self.color.stroke)
+  love.graphics.setColor(currentColor.stroke)
   love.graphics.rectangle("line", self.x + self.width - bw, self.y, bw, self.height, self.radius.x, self.radius.y)
   
   if self.drop == "down" then
@@ -59,34 +61,37 @@ function selectBox.draw(self)
     love.graphics.polygon( "fill", self.x + self.width - bw/2, self.y + self.height/3, self.x + self.width - bw/3*2, self.y + self.height/3*2, self.x + self.width - bw/3, self.y + self.height/3*2 )
   end
   
-  love.graphics.setColor(self.color.text)
+  love.graphics.setColor(currentColor.text)
   love.graphics.printf(self.text, self.x, self.y, self.width - self.padding.x * 2 - bw, "center", 0, self.height / 30, self.height / 30, self.padding.x *-1, self.padding.y * -1)
 
 end
 
 function selectBox.drawAfter(self)
+  
+  local currentColor = self:getColor()
+
   if self.open then
-    love.graphics.setColor(self.color.fill)
+    love.graphics.setColor(currentColor.fill)
     love.graphics.rectangle("fill", self.dropX, self.dropY, self.dropWidth, self.dropHeight, self.radius.x, self.radius.y)
-    love.graphics.setColor(self.color.stroke)
+    love.graphics.setColor(currentColor.stroke)
     love.graphics.rectangle("line", self.dropX, self.dropY, self.dropWidth, self.dropHeight, self.radius.x, self.radius.y)
   end
 end
 
-function selectBox.keyPressed(self, key)
+function selectBox.keyPressed(self, handled, key)
   if self.focused then
     self.text = self.text .. key
   end
 end
 
-function selectBox.mousePressed(self, x, y, button, isTouch)
+function selectBox.mousePressed(self, handled, x, y, button, isTouch)
   if self:hit(x,y) then 
     self.color = self.colors.pressed
     self.pressed = true
   end
 end
 
-function selectBox.mouseReleased(self, x, y, button, isTouch)
+function selectBox.mouseReleased(self, handled, x, y, button, isTouch)
   
   if self:hit(x,y) and self.pressed then
     self.focused = true
